@@ -1,0 +1,53 @@
+#just libraries
+
+install.packages("devtools")
+
+library("devtools") 
+
+install_github("Zhangxf-ccnu/chNet", subdir="pkg") 
+
+force = TRUE
+
+library(chNet)
+
+library(readxl)
+
+library(DESeq2)
+
+library(parallel)
+
+# importare la funzione di processamento (da Rstudio)
+
+source('C:/Users/franc//Desktop//funzioneRiscritta_v2.R')
+
+# leggere i due files
+
+data=read_xlsx('C:/Users/franc/Desktop/PROGETTO-LAVORO/Differential Network Analysis chNet/Esecuzioni Lambda/Whole blood/input/data whole blood.xlsx',col_types="numeric")
+
+dataf=data.frame(data)
+
+label=read_xlsx('C:/Users/franc/Desktop/PROGETTO-LAVORO/Differential Network Analysis chNet/Esecuzioni Lambda/Whole blood/input/label whole blood.xlsx')
+
+labelframe=data.frame(label)
+
+results=chNetModified(dataf,labelframe$Sesso, subsampling = TRUE, lambar = 12)
+
+#Istruzioni per scrivere i files
+#dato un oggetto Results ottenuto
+
+write_graph(results$Diff.net,'/Users/franc/Desktop/wholeblood.txt',format="edgelist")
+
+write.table(results$diff.gene,'/Users/franc/Desktop/wholeblooddiffgene.txt')
+
+write.table(results$diff.edge.weight,'/Users/franc/Desktop/diffedgegene.txt')
+
+#plottare la rete
+plot(results$Diff.net)
+
+
+ERRORE 
+results --> Errore in elnet(xd, is.sparse, y, weights, offset, type.gaussian, alpha,  : 
+  y is constant; gaussian glmnet fails at standardization step
+
+
+
