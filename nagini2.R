@@ -405,7 +405,7 @@ server <- function(input, output, session) {
     
     lista2 <<- (df2()$Sesso)
     
-    result <- chNetModified(df1(), lista2, subsampling = FALSE, R = 20, lambar =3)
+    result <- chNetModified(df1(), lista2, subsampling = input$varBool, R = input$slider, lambar = input$obs)
     
     adj_matrix <- result$diff.edge.weight
     
